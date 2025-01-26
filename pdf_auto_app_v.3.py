@@ -2,6 +2,7 @@ import streamlit as st
 from pypdf import PdfReader, PdfWriter, PageObject
 from datetime import datetime
 from io import BytesIO
+import requests
 
 # App title
 st.title("PDF Letterhead Overlay Tool")
@@ -10,17 +11,17 @@ This tool overlays a fixed letterhead on every page of a multi-page report.
 Select the report format, upload your report, and generate the final PDF.
 """)
 
-# Fixed Letterhead Path (change this to the actual path of your fixed letterhead file)
-#FIXED_LETTERHEAD_PATH = "letterhead_new_new.pdf"
-FIXED_LETTERHEAD_PATH = "https://raw.githubusercontent.com/Qurocare/pdf_Overlay_Tool_v.3/main/letterhead_new_new.pdf"
+# Fixed Letterhead URL (replace with your actual raw URL)
+FIXED_LETTERHEAD_URL = "https://raw.githubusercontent.com/Qurocare/pdf_Overlay_Tool_v.3/main/letterhead_new_new.pdf"
 
-
-# Validate the existence of the fixed letterhead
+# Download and load the letterhead PDF
 try:
-    letterhead_reader = PdfReader(FIXED_LETTERHEAD_PATH)
+    response = requests.get(FIXED_LETTERHEAD_URL)
+    response.raise_for_status()  # Raise an error for bad HTTP responses (4xx or 5xx)
+    letterhead_reader = PdfReader(BytesIO(response.content))
     letterhead_page = letterhead_reader.pages[0]
 except Exception as e:
-    st.error("Failed to load the fixed letterhead file. Please check the file path.")
+    st.error(f"Failed to load the fixed letterhead file. Error: {e}")
     st.stop()
 
 # Quro ID input field
@@ -36,7 +37,7 @@ if number_part:
 # Dropdown to select the report format
 report_format = st.selectbox(
     "Select the report format",
-    ["Select format", "LPL / MTT", "DS"]
+    ["Select format", "LPL", "DS"]
 )
 
 if report_format != "Select format":
