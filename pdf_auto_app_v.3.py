@@ -11,7 +11,9 @@ Select the report format, upload your report, and generate the final PDF.
 """)
 
 # Fixed Letterhead Path (change this to the actual path of your fixed letterhead file)
-FIXED_LETTERHEAD_PATH = "letterhead_new_new.pdf"
+#FIXED_LETTERHEAD_PATH = "letterhead_new_new.pdf"
+FIXED_LETTERHEAD_PATH = "https://raw.githubusercontent.com/Qurocare/pdf_Overlay_Tool_v.3/main/letterhead_new_new.pdf"
+
 
 # Validate the existence of the fixed letterhead
 try:
