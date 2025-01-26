@@ -2,7 +2,6 @@ import streamlit as st
 from pypdf import PdfReader, PdfWriter, PageObject
 from datetime import datetime
 from io import BytesIO
-import os
 
 # App title
 st.title("PDF Letterhead Overlay Tool")
